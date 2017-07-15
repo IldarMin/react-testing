@@ -6,9 +6,22 @@ module.exports = {
   context: dirname,
   devtool: debug ? "inline-sourcemap" : null,
   entry: "./js/app.js",
+  module: {
+    loaders: [
+      {
+        test: /\.jsx?$/,
+        exclude: /(node_modules|bower_components)/,
+        loader: 'babel-loader',
+        query: {
+          presets: ['react', 'es2015', 'stage-0'],
+          plugins: ['react-html-attrs', 'transform-decorators-legacy', 'transform-class-properties'],
+        }
+      }
+    ]
+  },
   output: {
-    path: dirname + "/js",
-    filename: "scripts.min.js"
+    path: dirname,
+    filename: "app.min.js"
   },
   plugins: debug ? [] : [
     new webpack.optimize.DedupePlugin(),
